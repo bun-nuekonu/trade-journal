@@ -20,59 +20,77 @@ function handleImport(e) {
 
 <template>
   <div class="app">
-    <header class="header">
-      <h1>トレード日記</h1>
-      <div class="header-actions">
-        <button
-          class="btn-icon"
-          title="エクスポート"
-          @click="exportData"
-        >
-          ↓
-        </button>
-        <button
-          class="btn-icon"
-          title="インポート"
-          @click="importInput.click()"
-        >
-          ↑
-        </button>
-        <input
-          ref="importInput"
-          type="file"
-          accept=".json"
-          style="display:none"
-          @change="handleImport"
-        >
-      </div>
-    </header>
+    <div class="fixed-area">
+      <header class="header">
+        <h1>トレード日記</h1>
+        <div class="header-actions">
+          <button
+            class="btn-icon"
+            title="エクスポート"
+            @click="exportData"
+          >
+            ↓
+          </button>
+          <button
+            class="btn-icon"
+            title="インポート"
+            @click="importInput.click()"
+          >
+            ↑
+          </button>
+          <input
+            ref="importInput"
+            type="file"
+            accept=".json"
+            style="display:none"
+            @change="handleImport"
+          >
+        </div>
+      </header>
 
-    <SummaryBar
-      :total-pnl="totalPnL"
-      :total-pnl-after-tax="totalPnLAfterTax"
-      :win-rate="winRate"
-      :count="store.records.length"
-    />
+      <SummaryBar
+        :total-pnl="totalPnL"
+        :total-pnl-after-tax="totalPnLAfterTax"
+        :win-rate="winRate"
+        :count="store.records.length"
+      />
 
-    <button
-      v-if="!showForm"
-      class="btn-add"
-      @click="showForm = true"
-    >
-      + 新しい取引を記録
-    </button>
+      <button
+        v-if="!showForm"
+        class="btn-add"
+        @click="showForm = true"
+      >
+        + 新しい取引を記録
+      </button>
 
-    <TradeForm
-      v-if="showForm"
-      @saved="showForm = false"
-      @cancel="showForm = false"
-    />
+      <TradeForm
+        v-if="showForm"
+        @saved="showForm = false"
+        @cancel="showForm = false"
+      />
+    </div>
 
-    <TradeList />
+    <div class="scroll-area">
+      <TradeList />
+    </div>
   </div>
 </template>
 
 <style scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+.fixed-area {
+  flex-shrink: 0;
+}
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .header {
   display: flex;
   justify-content: space-between;
