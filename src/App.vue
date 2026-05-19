@@ -80,7 +80,8 @@ function handleImport(e) {
 .app {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 .fixed-area {
